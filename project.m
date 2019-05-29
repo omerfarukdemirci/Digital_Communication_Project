@@ -2,14 +2,14 @@ close all; clear all; clc;
 Fs = 8000 ; 
 nBits = 8 ; 
 nChannels = 1 ; 
-length=3;
+Vlength=3;
 ID = -1; % default audio input device 
 recObj = audiorecorder(Fs,nBits,nChannels,ID);
 disp('Start speaking.')
-recordblocking(recObj,length);
+recordblocking(recObj,Vlength);
 disp('End of Recording.');
 signal = getaudiodata(recObj);
-t = (0:1:length*Fs-1);  
+t = (0:1:Vlength*Fs-1);  
 t_1 = (0:1:1279999);
 figure;
 plot(t,signal);
@@ -23,19 +23,19 @@ digital_signal_2=de2bi(digital_signal,nBits);
 figure;
 plot(digital_signal_2);
 digital_line=[];
-for i=1:length*Fs 
+for i=1:Vlength*Fs 
  digital_line=[digital_line digital_signal_2(i,:)];  
 end
 out=[];
 figure;
-for j=0:length*Fs-1
+for j=0:Vlength*Fs-1
     out=[out ;bi2de(digital_line((j*nBits)+(1:nBits)))];
     
 end
 out=(out/(2^nBits-1))+mini;
 plot(t,out);
 sound(out);
-save VoiceData digital_line;
+save VoiceData digital_line mini nBits Fs Vlength;
 % %%
 % isequal(transpose(digital_signal),out)
 % %%
