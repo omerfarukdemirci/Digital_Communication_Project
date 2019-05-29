@@ -33,16 +33,16 @@ exdata=[exdata 0];
 % hold on;
 %% modulate
 mSig=exdata.*carrier;
-plot(mSig,'b-','LineWidth',2);
+% plot(mSig,'b-','LineWidth',2);
 
 %% channel
 figure;
 SNR=50;
 rx=awgn(mSig,SNR);
-plot(mSig,'r-','LineWidth',3);
-hold on;
-plot(rx,'b-','LineWidth',1);
-grid on;
+% plot(mSig,'r-','LineWidth',3);
+% hold on;
+% plot(rx,'b-','LineWidth',1);
+% grid on;
 
 %% demodulate
 dem=rx.*carrier;
