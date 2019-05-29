@@ -17,10 +17,11 @@ carrier=sin(2*pi*fc*t);
 %% squaredata
 tp=0:Ts:Tc*M;
 exdata=zeros(1,length(data)*(length(tp)-1));
-
+dummy=1;
 for i=1:length(data)
     for j=1:length(tp)-1
-        exdata(i)=pData(i);
+        exdata(dummy)=pData(i);
+        dummy=dummy+1;
     end
 end
 exdata=[exdata 0];
@@ -32,16 +33,16 @@ exdata=[exdata 0];
 % hold on;
 %% modulate
 mSig=exdata.*carrier;
-% plot(mSig,'b-','LineWidth',2);
+plot(mSig,'b-','LineWidth',2);
 
 %% channel
-% figure;
+figure;
 SNR=50;
 rx=awgn(mSig,SNR);
-% plot(mSig,'r-','LineWidth',3);
-% hold on;
-% plot(rx,'b-','LineWidth',1);
-% grid on;
+plot(mSig,'r-','LineWidth',3);
+hold on;
+plot(rx,'b-','LineWidth',1);
+grid on;
 
 %% demodulate
 dem=rx.*carrier;
