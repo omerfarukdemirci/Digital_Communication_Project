@@ -9,7 +9,7 @@ Tc=1/fc;
 M=1;
 n=M*length(data);
 t=0:Ts:n*Tc;
-carrier=cos(2*pi*fc*t);
+carrier=cos(2*pi*fc*t+(pi/2));
 % subplot(2,1,1);
 % stem(pData);
 % subplot(2,1,2);
@@ -38,8 +38,8 @@ mSig=exdata.*carrier;
 %% channel
 
 SNR=10;
-rx=awgn(mSig,SNR);
-
+ch=awgn(mSig,SNR);
+rx=ch/10^6;
 % figure;
 % plot(mSig,'r-','LineWidth',3);
 % hold on;
