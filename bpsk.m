@@ -10,10 +10,7 @@ M=1;
 n=M*length(data);
 t=0:Ts:n*Tc;
 carrier=cos(2*pi*fc*t+(pi/2));
-% subplot(2,1,1);
-% stem(pData);
-% subplot(2,1,2);
-% plot(carrier);
+
 %% squaredata
 tp=0:Ts:Tc*M;
 exdata=zeros(1,length(data)*(length(tp)-1));
@@ -25,39 +22,26 @@ for i=1:length(data)
     end
 end
 exdata=[exdata 0];
-% figure;
-% plot(exdata,'r-','LineWidth',4);
-% hold on;
-% plot(carrier,'g-');
-% grid on;
-% hold on;
-%% modulate
+
+%% modulation
 mSig=exdata.*carrier;
-% plot(mSig,'b-','LineWidth',2);
 
 %% channel
-
 SNR=3;
 ch=awgn(mSig,SNR,'measured');
 rx=ch/(10^6);
-% figure;
-% plot(mSig,'r-','LineWidth',3);
-% hold on;
-% plot(rx,'b-','LineWidth',1);
-% grid on;
 
-%% demodulate
+
+%% demodulation
 demSig=rx.*carrier;
-% figure;
-% plot(demSig);
-% grid on;
-%% amplifier
+
+%% LNA
 amp1=demSig*10;
 
 p1=sum(amp1.^2);
 
 amp2=awgn(amp1,7,'measured');
-%% decode
+%% decoding
 k=1;
 rcv=zeros(1,length(data)); 
 index=0;
@@ -76,7 +60,7 @@ for i=1:length(data)
 end
 %% BER
 [number,ratio] = biterr(digital_line,rcv);
-%% output
+%% DAC
 tl = (0:1:Fs*Vlength-1); 
 out=zeros(1,Fs*Vlength-1);
 
@@ -86,4 +70,3 @@ end
 out=(out/(2^nBits-1))+mini;
 plot(tl,out);
 sound(out);
-

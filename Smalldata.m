@@ -16,23 +16,23 @@ subplot(2,1,2);
 plot(carrier);
 %% squaredata
 tp=0:Ts:Tc*M;
-exdata=zeros(1,length(data)*(length(tp)-1));
+Squaredata=zeros(1,length(data)*(length(tp)-1));
 index1=1;
 for i=1:length(data)
     for j=1:length(tp)-1
-        exdata(index1)=pData(i);
+        Squaredata(index1)=pData(i);
         index1=index1+1;
     end
 end
-exdata=[exdata 0];
+Squaredata=[Squaredata 0];
 figure;
-plot(exdata,'r-','LineWidth',2);
+plot(Squaredata,'r-','LineWidth',2);
 hold on;
 plot(carrier,'g-','LineWidth',2);
 grid on;
 hold on;
 %% modulate
-mSig=exdata.*carrier;
+mSig=Squaredata.*carrier;
 plot(mSig,'b-','LineWidth',2);
 
 %% channel
@@ -81,21 +81,3 @@ for i=1:length(data)
         rcv(index)=0;
     end
 end
-
-%% output
-
-% h = rfckt.amplifier;
-% unmatched_amp = read(rfckt.amplifier, 'samplelna1.s2p');
-% analyze(unmatched_amp, 2e9:50e6:10e9);
-% figure
-% plot(unmatched_amp,'Gmag','Ga','Gt','dB')
-% tl = (0:1:Fs*Vlength-1); 
-% out=zeros(1,Fs*Vlength-1);
-% 
-% for j=0:Fs*Vlength-1
-%     out(j+1)=bi2de(rcv((j*nBits)+(1:nBits)));
-% end
-% out=(out/(2^nBits-1))+mini;
-% plot(tl,out);
-% sound(out);
-

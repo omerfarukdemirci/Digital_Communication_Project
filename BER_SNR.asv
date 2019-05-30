@@ -26,9 +26,11 @@ exdata=[exdata 0];
 %% modulate
 mSig=exdata.*carrier;
 
-%% channel
 
-SNR=3;
+%% channel
+Ber=zeros(2,60);
+for q=0:60
+SNR=q;
 ch=awgn(mSig,SNR,'measured');
 rx=ch/(10^6);
 
@@ -46,29 +48,24 @@ amp2=awgn(amp1,7,'measured');
 k=1;
 rcv=zeros(1,length(data)); 
 index=0;
-for i=1:length(data)
+    for i=1:length(data)
    index=index+1;
     sm=0;
-    for j=1:length(tp)-1
+      for j=1:length(tp)-1
         sm=sm+ amp2(k);
         k=k+1;
-   end
-    if(sm>0)
+      end
+        if(sm>0)
         rcv(index)=1;
-    else
+        else
         rcv(index)=0;
+        end
     end
-end
 %% BER
 [number,ratio] = biterr(digital_line,rcv);
-%% output
-tl = (0:1:Fs*Vlength-1); 
-out=zeros(1,Fs*Vlength-1);
-
-for j=0:Fs*Vlength-1
-    out(j+1)=bi2de(rcv((j*nBits)+(1:nBits)));
+Ber(1,q+1)=ratio;
+Ber(2,q+1)=number;
 end
-out=(out/(2^nBits-1))+mini;
-plot(tl,out);
-sound(out);
-
+SNRx=1:61;
+figure;
+stem(SNRx,log(Ber(1,:)),'r*');
