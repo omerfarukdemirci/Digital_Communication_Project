@@ -1,9 +1,8 @@
 clear all;close all; clc;
 load VoiceData;
 data=digital_line;
-data1=[1 0 0 1 0];
 pData=data*2-1;
-fc=100000000;
+fc=99000000;
 fcs=10*fc;
 Ts=1/fcs;
 Tc=1/fc;
