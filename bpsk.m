@@ -1,43 +1,44 @@
- clear all;close all; clc;
-load VoiceData;
-data=digital_line;
+clear all;close all; clc;
+%load VoiceData;
+%data=digital_line;
+data=[1 0 0 1 0];
 pData=data*2-1;
-fc=1000;
-fcs=100*fc;
+fc=100000000;
+fcs=1000*fc;
 Ts=1/fcs;
 Tc=1/fc;
-M=10;
+M=1;
 n=M*length(data);
 t=0:Ts:n*Tc;
-carrier=sin(2*pi*fc*t);
-% subplot(2,1,1);
-% stem(pData);
-% subplot(2,1,2);
-% plot(carrier);
+carrier=cos(2*pi*fc*t);
+subplot(2,1,1);
+stem(pData);
+subplot(2,1,2);
+plot(carrier);
 %% squaredata
 tp=0:Ts:Tc*M;
 exdata=zeros(1,length(data)*(length(tp)-1));
-dummy=1;
+index1=1;
 for i=1:length(data)
     for j=1:length(tp)-1
-        exdata(dummy)=pData(i);
-        dummy=dummy+1;
+        exdata(index1)=pData(i);
+        index1=index1+1;
     end
 end
 exdata=[exdata 0];
-% figure;
-% plot(exdata,'r-','LineWidth',4);
-% hold on;
-% plot(carrier,'g-');
-% grid on;
-% hold on;
+figure;
+plot(exdata,'r-','LineWidth',4);
+hold on;
+plot(carrier,'g-');
+grid on;
+hold on;
 %% modulate
 mSig=exdata.*carrier;
-% plot(mSig,'b-','LineWidth',2);
+plot(mSig,'b-','LineWidth',2);
 
 %% channel
 figure;
-SNR=50;
+SNR=-15;
 rx=awgn(mSig,SNR);
 % plot(mSig,'r-','LineWidth',3);
 % hold on;

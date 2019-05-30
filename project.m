@@ -2,7 +2,7 @@ close all; clear all; clc;
 Fs = 8000 ; 
 nBits = 8 ; 
 nChannels = 1 ; 
-Vlength=3;
+Vlength=10;
 ID = -1; % default audio input device 
 recObj = audiorecorder(Fs,nBits,nChannels,ID);
 disp('Start speaking.')
