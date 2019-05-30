@@ -75,6 +75,11 @@ for i=1:length(data)
 end
 
 %% output
+h = rf.amplifier;
+unmatched_amp = read(rfckt.amplifier, 'samplelna1.s2p');
+analyze(unmatched_amp, 2e9:50e6:10e9);
+figure
+plot(unmatched_amp,'Gmag','Ga','Gt','dB')
 % tl = (0:1:Fs*Vlength-1); 
 % out=zeros(1,Fs*Vlength-1);
 % 
