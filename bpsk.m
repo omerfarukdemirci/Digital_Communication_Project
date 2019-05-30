@@ -37,9 +37,9 @@ mSig=exdata.*carrier;
 
 %% channel
 
-SNR=10;
-ch=awgn(mSig,SNR);
-rx=ch/10^6;
+SNR=3;
+ch=awgn(mSig,SNR,'measured');
+rx=ch/(10^6);
 % figure;
 % plot(mSig,'r-','LineWidth',3);
 % hold on;
@@ -51,7 +51,12 @@ demSig=rx.*carrier;
 % figure;
 % plot(demSig);
 % grid on;
+%% amplifier
+amp1=demSig*10;
 
+p1=sum(amp1.^2);
+
+amp2=awgn(amp1,7,'measured');
 %% decode
 k=1;
 rcv=zeros(1,length(data)); 
@@ -60,7 +65,7 @@ for i=1:length(data)
    index=index+1;
     sm=0;
     for j=1:length(tp)-1
-        sm=sm+ demSig(k);
+        sm=sm+ amp2(k);
         k=k+1;
    end
     if(sm>0)
@@ -69,7 +74,8 @@ for i=1:length(data)
         rcv(index)=0;
     end
 end
-
+%% BER
+[number,ratio] = biterr(digital_line,rcv);
 %% output
 tl = (0:1:Fs*Vlength-1); 
 out=zeros(1,Fs*Vlength-1);
@@ -80,4 +86,4 @@ end
 out=(out/(2^nBits-1))+mini;
 plot(tl,out);
 sound(out);
-clc; 
+

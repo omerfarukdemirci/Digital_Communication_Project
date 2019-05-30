@@ -38,7 +38,7 @@ plot(mSig,'b-','LineWidth',2);
 %% channel
 
 SNR=3;
-ch=awgn(mSig,SNR);
+ch=awgn(mSig,SNR,'measured');
 rx=ch/(10^6);
 
 figure;
@@ -55,6 +55,14 @@ plot(demSig,'b-','LineWidth',4);
 grid on;
 hold on
 plot(mSig,'r-','LineWidth',2);
+%%
+amp1=demSig*10;
+p1=0;
+for i=1:length(amp1)
+p1=p1+abs(amp1(i))^2;
+end
+amp2=awgn(amp1,10*log(p1/10^0.3),'measured');
+
 %% decode
 k=1;
 rcv=zeros(1,length(data)); 
@@ -63,7 +71,7 @@ for i=1:length(data)
    index=index+1;
     sm=0;
     for j=1:length(tp)-1
-        sm=sm+ demSig(k);
+        sm=sm+ amp2(k);
         k=k+1;
     end
    
@@ -75,11 +83,12 @@ for i=1:length(data)
 end
 
 %% output
-h = rf.amplifier;
-unmatched_amp = read(rfckt.amplifier, 'samplelna1.s2p');
-analyze(unmatched_amp, 2e9:50e6:10e9);
-figure
-plot(unmatched_amp,'Gmag','Ga','Gt','dB')
+
+% h = rfckt.amplifier;
+% unmatched_amp = read(rfckt.amplifier, 'samplelna1.s2p');
+% analyze(unmatched_amp, 2e9:50e6:10e9);
+% figure
+% plot(unmatched_amp,'Gmag','Ga','Gt','dB')
 % tl = (0:1:Fs*Vlength-1); 
 % out=zeros(1,Fs*Vlength-1);
 % 
