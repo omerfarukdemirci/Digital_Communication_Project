@@ -73,10 +73,10 @@ end
 
 %% output
 tl = (0:1:Fs*Vlength-1); 
-out=[];
+out=zeros(1,Fs*Vlength-1);
+
 for j=0:Fs*Vlength-1
-    out=[out ;bi2de(rcv((j*nBits)+(1:nBits)))];
-    
+    out(j+1)=bi2de(rcv((j*nBits)+(1:nBits)));
 end
 out=(out/(2^nBits-1))+mini;
 plot(tl,out);
