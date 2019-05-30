@@ -68,4 +68,4 @@ Ber(2,q+1)=number;
 end
 SNRx=1:61;
 figure;
-semilogy(SNRx,(Ber(1,:)));
+semilogy(SNRx,(Ber(1,:)),'rs');
