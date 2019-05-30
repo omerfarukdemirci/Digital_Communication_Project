@@ -25,7 +25,7 @@ plot(digital_signal_2);
 digital_line=zeros(1,Vlength*Fs*8);
 indexx=1;
 for i=1:Vlength*Fs 
- digital_line(indexx:indexx+7)=digital_signal_2(i,:);  
+ digital_line(indexx:indexx+8)=digital_signal_2(i,:);  
  indexx=indexx+8;
 end
 % out=[];
