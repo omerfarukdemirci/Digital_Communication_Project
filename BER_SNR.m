@@ -69,3 +69,5 @@ end
 SNRx=1:61;
 figure;
 semilogy(SNRx,(Ber(1,:)),'rs');
+xlabel('SNR') 
+ylabel('BER') 

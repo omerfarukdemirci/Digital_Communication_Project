@@ -1,16 +1,16 @@
-clear all;close all; clc;
+% clear all;close all; clc;
 load VoiceData;
 fc=99000000;
 fcs=10*fc;
 Ts=1/fcs;
 Tc=1/fc;
 M=1;
+data=digital_line;
 n=M*length(data);
 t=0:Ts:n*Tc;
 %% carrier
 carrier=cos(2*pi*fc*t+(pi/2));
 %% importing 
-data=digital_line;
 pData=data*2-1;
 %% squaredata
 tp=0:Ts:Tc*M;
@@ -67,4 +67,7 @@ for j=0:Fs*Vlength-1
 end
 out=(out/(2^nBits-1))+mini;
 plot(tl,out);
+title('Output Voice Signal')
+xlabel('Time') 
+ylabel('Voice Signal') 
 sound(out);

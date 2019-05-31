@@ -12,8 +12,11 @@ t=0:Ts:n*Tc;
 carrier=cos(2*pi*fc*t+(pi/2));
 subplot(2,1,1);
 stem(pData);
+title('Polor Data');
 subplot(2,1,2);
 plot(carrier);
+title('Carrier Signal');
+
 %% squaredata
 tp=0:Ts:Tc*M;
 Squaredata=zeros(1,length(data)*(length(tp)-1));
@@ -34,10 +37,11 @@ hold on;
 %% modulate
 mSig=Squaredata.*carrier;
 plot(mSig,'b-','LineWidth',2);
+title('red: SqureData | green: Carrier | blue: Modulated Signal');
 
 %% channel
 
-SNR=3;
+SNR=50;
 ch=awgn(mSig,SNR,'measured');
 rx=ch/(10^6);
 
@@ -57,12 +61,9 @@ hold on
 plot(mSig,'r-','LineWidth',2);
 %%
 amp1=demSig*10;
-p1=0;
-for i=1:length(amp1)
-p1=p1+abs(amp1(i))^2;
-end
-amp2=awgn(amp1,10*log(p1/10^0.3),'measured');
-
+amp2=awgn(amp1,7,'measured');
+plot(demSig)
+title('Noisy Signal After Demodulation')
 %% decode
 k=1;
 rcv=zeros(1,length(data)); 
@@ -81,3 +82,5 @@ for i=1:length(data)
         rcv(index)=0;
     end
 end
+stem(rcv)
+title('Output Signal');

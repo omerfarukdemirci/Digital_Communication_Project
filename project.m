@@ -12,6 +12,9 @@ signal = getaudiodata(recObj);
 t = (0:1:Vlength*Fs-1);  
 figure;
 plot(t,signal);
+title('Input Voice Signal')
+xlabel('Time') 
+ylabel('Voice Signal') 
 %%
 mini=min(signal);
 signal=signal-mini;
