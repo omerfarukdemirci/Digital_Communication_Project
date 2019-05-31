@@ -12,14 +12,16 @@ signal = getaudiodata(recObj);
 t = (0:1:Vlength*Fs-1);  
 figure;
 plot(t,signal);
+%%
 mini=min(signal);
 signal=signal-mini;
 [index,digital_signal] = quantiz((2^nBits-1)*(signal),0:1:(2^nBits-1),0:1:(2^nBits));
-digital_signal_2=de2bi(digital_signal,nBits);
 
+%%
+digital_signal_2=de2bi(digital_signal,nBits);
 figure;
 plot(digital_signal_2);
-
+%%
 digital_line=zeros(1,Vlength*Fs*8);
 indexx=1;
 for i=1:Vlength*Fs 
