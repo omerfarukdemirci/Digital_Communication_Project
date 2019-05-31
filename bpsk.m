@@ -38,9 +38,6 @@ demSig=rx.*carrier;
 
 %% LNA
 amp1=demSig*10;
-
-p1=sum(amp1.^2);
-
 amp2=awgn(amp1,7,'measured');
 %% decoding
 k=1;
