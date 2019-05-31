@@ -1,7 +1,5 @@
 clear all;close all; clc;
 load VoiceData;
-data=digital_line;
-pData=data*2-1;
 fc=99000000;
 fcs=10*fc;
 Ts=1/fcs;
@@ -9,8 +7,11 @@ Tc=1/fc;
 M=1;
 n=M*length(data);
 t=0:Ts:n*Tc;
+%% carrier
 carrier=cos(2*pi*fc*t+(pi/2));
-
+%% importing 
+data=digital_line;
+pData=data*2-1;
 %% squaredata
 tp=0:Ts:Tc*M;
 exdata=zeros(1,length(data)*(length(tp)-1));
